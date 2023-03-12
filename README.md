@@ -18,13 +18,13 @@ autoloot (Usage: Press F2 For On/Off)
 [Usage]  
 Download "Titanfall_VPKTool3.4_Portable.zip" from https://noskill.gitbook.io/titanfall2/intro/duction/tools  
   
-Open "englishclient_frontend.bsp.pak000_dir.vpk" in "...../Steam/steamapps/common/Apex Legends/vpk/" with the downloaded "Titalfall VPK Tool", extract and save (delete the log file)  
+Open "englishclient_frontend.bsp.pak000_dir.vpk" in "...../Steam/steamapps/common/Apex Legends/vpk/" with the downloaded "Titalfall VPK Tool", extract all (delete the log file)  
   
-Replace files using files in this repository (or edit scripts in the extracted files)  
+Replace "sh_character_select_new.gnut" using the file in this repository 
   
-Repack with "Titalfall VPK Tool" -> Tools -> Repack  
+Repack with Tools -> Repack  
   
-Rename the generated "englishclient_frontend.bsp.pak000_000.vpk" to "client_frontend.bsp.pak000_000.vpk"  
+Rename the generated vpk file to "client_frontend.bsp.pak000_000.vpk" and the .dir.vpk file to "englishclient_frontend.bsp.pak000_dir.vpk"  
   
 Move the two generated files back to "...../Steam/steamapps/common/Apex Legends/vpk/"  
   
