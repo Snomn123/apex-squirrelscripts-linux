@@ -3346,7 +3346,7 @@ void function th_func_minimap_uav()
 					}
 					else
 					{
-						AnnouncementMessageSweep( lp_player, "Item ESP OFF", triggerBot.tostring(), <255,0,0>);
+						AnnouncementMessageSweep( lp_player, "Trigger Bot OFF", triggerBot.tostring(), <255,0,0>);
 					}
 				}
 			}
@@ -3362,7 +3362,7 @@ void function th_func_minimap_uav()
             triggerbotEnabled = false;
     		}
     		//&& GetCurrentPlaylistVarBool( "tb", false )
-    		if (triggerbotEnabled && IsValid(player) && IsAlive(player) && player.GetBleedoutState() == BS_NOT_BLEEDING_OUT)
+    		if (triggerBot && triggerbotEnabled && IsValid(player) && IsAlive(player) && player.GetBleedoutState() == BS_NOT_BLEEDING_OUT)
     		{
     			entity activeWeapon = player.GetActiveWeapon(eActiveInventorySlot.mainHand);
     			if( activeWeapon &&
