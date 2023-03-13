@@ -9,7 +9,7 @@ Updated Squirrel scripts for linux only!
 (original -> https://www.unknowncheats.me/forum/apex-legends/505139-apex-squirrel-scripts.html)  
 fullmap radar  
 minimap radar  
-TriggerBot (Usage: Hold Mouse Button 5)  
+TriggerBot (Usage: On/Off = F4, Activation = Aim/Right mouse button)  
 item icon ESP (Usage: Press F3 For On/Off)  
 seer health ESP  
 autoloot (Usage: Press F2 For On/Off)  
