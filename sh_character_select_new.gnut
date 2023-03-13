@@ -3344,11 +3344,11 @@ void function th_func_triggerbot()
 			if ( IsValid( lp_player ) ) {
 				if(triggerBot)
 				{
-					AnnouncementMessageSweep( lp_player, "Trigger Bot ON", itemesp.tostring(), <0,255,0>);
+					AnnouncementMessageSweep( lp_player, "Trigger Bot ON", triggerBot.tostring(), <0,255,0>);
 				}
 				else
 				{
-					AnnouncementMessageSweep( lp_player, "Trigger Bot OFF", itemesp.tostring(), <255,0,0>);
+					AnnouncementMessageSweep( lp_player, "Trigger Bot OFF", triggerBot.tostring(), <255,0,0>);
 				}
 			}
 		}
