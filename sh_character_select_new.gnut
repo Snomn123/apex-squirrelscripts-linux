@@ -3331,7 +3331,7 @@ void function th_func_minimap_uav()
     	{
     		entity lp_player = GetLocalViewPlayer()
     		entity player = GetLocalClientPlayer()
-    		if (InputIsButtonDown(MOUSE_5)) {
+    		if (InputIsButtonDown(MOUSE_RIGHT)) {
     				triggerbotEnabled = true;
     		}
     		else {
