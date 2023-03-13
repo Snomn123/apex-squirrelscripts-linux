@@ -24,7 +24,7 @@ Replace "sh_character_select_new.gnut" using the file in this repository
   
 Repack with Tools -> Repack  
   
-Rename the generated vpk file to "client_frontend.bsp.pak000_000.vpk" and the .dir.vpk file to "englishclient_frontend.bsp.pak000_dir.vpk"  
+Rename the generated vpk file to "client_frontend.bsp.pak000_000.vpk" and the _dir.vpk file to "englishclient_frontend.bsp.pak000_dir.vpk"  
   
 Move the two generated files back to "...../Steam/steamapps/common/Apex Legends/vpk/"  
   
