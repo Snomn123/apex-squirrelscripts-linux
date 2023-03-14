@@ -3200,6 +3200,41 @@ void function OnPlayerUpdatedCharacterLockTime( entity player, float newTime )
   	                                                                                                                                                                                                                                                  
 
 #if CLIENT
+void function my_th_func_1()
+{
+	bool enabled = true
+	bool buttonDown = false
+ 
+	while(true)
+	{
+		entity lp_player = GetLocalViewPlayer()
+		if(InputIsButtonDown(KEY_F6) && !buttonDown)
+		{
+			enabled = !enabled;
+			buttonDown = true;
+			if ( IsValid( lp_player ) )
+			{
+				if(enabled)
+				{
+					AnnouncementMessageSweep( lp_player, "Enabled", enabled.tostring(), <0,255,0>);
+				}
+				else
+				{
+					AnnouncementMessageSweep( lp_player, "Disabled", enabled.tostring(), <255,0,0>);
+				}
+			}
+		}
+		else
+		{
+			buttonDown = false;
+		}
+
+		wait 0.2;
+
+		WaitFrame();
+	}
+}
+
 // Script Start
 void function th_func_fullmap_uav()
 {
@@ -3324,100 +3359,127 @@ void function th_func_minimap_uav()
 	};
 }
 
-    void function th_func_triggerbot()
-    {
-    	bool triggerbotEnabled = false
+void function th_func_triggerbot()
+{
+	bool triggerbotEnabled = false
 
-    	while(true)
-    	{
-    		entity lp_player = GetLocalViewPlayer()
-    		entity player = GetLocalClientPlayer()
+	bool enabled = true
+	bool buttonDown = false
 
-    		if (InputIsButtonDown(MOUSE_RIGHT)) {
-    				triggerbotEnabled = true;
-    		}
-    		else {
-            triggerbotEnabled = false;
-    		}
-    		//&& GetCurrentPlaylistVarBool( "tb", false )
-    		if (triggerbotEnabled && IsValid(player) && IsAlive(player) && player.GetBleedoutState() == BS_NOT_BLEEDING_OUT)
-    		{
-    			entity activeWeapon = player.GetActiveWeapon(eActiveInventorySlot.mainHand);
-    			if( activeWeapon &&
-    			IsValid(activeWeapon) &&
-    			!activeWeapon.IsReloading() &&
-    			(((IsWeaponInSingleShotMode(activeWeapon) || IsWeaponInBurstMode(activeWeapon)) && activeWeapon.IsReadyToFire() == true) || IsWeaponInAutomaticMode(activeWeapon)))
-    			{
-    				bool bBocek = activeWeapon.GetWeaponClassName() == "mp_weapon_bow";
-    				if(!bBocek && (InputIsButtonDown( MOUSE_LEFT ) || InputIsButtonDown( BUTTON_A )))
-    				{
-    					WaitFrame();
-    					continue;
-    				};
-     
-    				vector crosshairStart = player.EyePosition();
-    				vector crosshairEnd = crosshairStart + player.GetViewForward() * 250000;
-    				entity undercrosshair = player.GetTargetUnderCrosshair();
-    				entity crosshairEnt = null;
-     
-    				if(undercrosshair == null)
-    				{
-    					TraceResults crosshairResults = TraceLine( crosshairStart, crosshairEnd, player, TRACE_MASK_SHOT, TRACE_COLLISION_GROUP_NONE, player );
-    					crosshairEnt = crosshairResults.hitEnt;
-     
-    					if ( IsValid( crosshairEnt ) && (crosshairEnt.GetScriptName() == "gibraltar_gun_shield" || crosshairEnt.GetScriptName() == "amped_wall"))
-    					{
-    						var deferredTrace = DeferredTraceLine( crosshairStart, crosshairEnd, crosshairEnt, TRACE_MASK_SHOT, TRACE_COLLISION_GROUP_NONE);while ( IsDeferredTraceFinished( deferredTrace ) == false)
-    						{
-    							WaitFrame();
-    						};
-     
-    						crosshairResults = GetDeferredTraceResult( deferredTrace );
-    						crosshairEnt = crosshairResults.hitEnt;
-    					};
-    				}
-    				else
-    				{
-    					crosshairEnt = undercrosshair;
-    				};
-     
-    				if ( IsValid(player) &&
-    				IsAlive(player) &&
-    				IsValid( crosshairEnt ) &&
-    				(IsFiringRangeGameMode() ||
-    				IsSurvivalTraining() ||
-    				((GameRules_GetGameMode() == GAMEMODE_CONTROL && (crosshairEnt.GetTeam() % 2) != (player.GetTeam() % 2)) ||
-    				(GameRules_GetGameMode() != GAMEMODE_CONTROL && crosshairEnt.GetTeam() != player.GetTeam()))) &&
-    				(crosshairEnt.IsPlayer() || IsTrainingDummie(crosshairEnt) || IsProwler( crosshairEnt ) || IsSpider( crosshairEnt )) )
-    				{
-    					//GetCurrentPlaylistVarBool( "trigger_ignore_down", false ) == false ||
-    					if(crosshairEnt.GetBleedoutState() == BS_NOT_BLEEDING_OUT)
-    					{
-    						if(bBocek && activeWeapon.GetWeaponChargeFraction() == 1.0)
-    						{
-    							player.ClientCommand("-attack");
-    						};
-     
-    						if(!bBocek)
-    						{
-    							player.ClientCommand("+attack");
-    							player.ClientCommand("-attack");
-    						};
-    					}
-    				}
-    			}
-    		};
-     
-    		WaitFrame();
-    	}
-    }
+	while(true)
+	{
+		entity lp_player = GetLocalViewPlayer()
+		entity player = GetLocalClientPlayer()
+
+		if (InputIsButtonDown(MOUSE_RIGHT)) {
+				triggerbotEnabled = true;
+		}
+		else {
+		triggerbotEnabled = false;
+		}
+		
+		if(InputIsButtonDown(KEY_F5) && !buttonDown)
+		{
+			enabled = !enabled;
+			buttonDown = true;
+			if ( IsValid( lp_player ) )
+			{
+				if(enabled)
+				{
+					AnnouncementMessageSweep( lp_player, "Trigger Bot On", enabled.tostring(), <0,255,0>);
+				}
+				else
+				{
+					AnnouncementMessageSweep( lp_player, "Trigger Bot Off", enabled.tostring(), <255,0,0>);
+				}
+			}
+		}
+		else
+		{
+			buttonDown = false;
+		}
+
+		wait 0.2;
+
+		//&& GetCurrentPlaylistVarBool( "tb", false )
+		if (enabled && triggerbotEnabled && IsValid(player) && IsAlive(player) && player.GetBleedoutState() == BS_NOT_BLEEDING_OUT)
+		{
+			entity activeWeapon = player.GetActiveWeapon(eActiveInventorySlot.mainHand);
+			if( activeWeapon &&
+			IsValid(activeWeapon) &&
+			!activeWeapon.IsReloading() &&
+			(((IsWeaponInSingleShotMode(activeWeapon) || IsWeaponInBurstMode(activeWeapon)) && activeWeapon.IsReadyToFire() == true) || IsWeaponInAutomaticMode(activeWeapon)))
+			{
+				bool bBocek = activeWeapon.GetWeaponClassName() == "mp_weapon_bow";
+				if(!bBocek && (InputIsButtonDown( MOUSE_LEFT ) || InputIsButtonDown( BUTTON_A )))
+				{
+					WaitFrame();
+					continue;
+				};
+	
+				vector crosshairStart = player.EyePosition();
+				vector crosshairEnd = crosshairStart + player.GetViewForward() * 250000;
+				entity undercrosshair = player.GetTargetUnderCrosshair();
+				entity crosshairEnt = null;
+	
+				if(undercrosshair == null)
+				{
+					TraceResults crosshairResults = TraceLine( crosshairStart, crosshairEnd, player, TRACE_MASK_SHOT, TRACE_COLLISION_GROUP_NONE, player );
+					crosshairEnt = crosshairResults.hitEnt;
+	
+					if ( IsValid( crosshairEnt ) && (crosshairEnt.GetScriptName() == "gibraltar_gun_shield" || crosshairEnt.GetScriptName() == "amped_wall"))
+					{
+						var deferredTrace = DeferredTraceLine( crosshairStart, crosshairEnd, crosshairEnt, TRACE_MASK_SHOT, TRACE_COLLISION_GROUP_NONE);while ( IsDeferredTraceFinished( deferredTrace ) == false)
+						{
+							WaitFrame();
+						};
+	
+						crosshairResults = GetDeferredTraceResult( deferredTrace );
+						crosshairEnt = crosshairResults.hitEnt;
+					};
+				}
+				else
+				{
+					crosshairEnt = undercrosshair;
+				};
+	
+				if ( IsValid(player) &&
+				IsAlive(player) &&
+				IsValid( crosshairEnt ) &&
+				(IsFiringRangeGameMode() ||
+				IsSurvivalTraining() ||
+				((GameRules_GetGameMode() == GAMEMODE_CONTROL && (crosshairEnt.GetTeam() % 2) != (player.GetTeam() % 2)) ||
+				(GameRules_GetGameMode() != GAMEMODE_CONTROL && crosshairEnt.GetTeam() != player.GetTeam()))) &&
+				(crosshairEnt.IsPlayer() || IsTrainingDummie(crosshairEnt) || IsProwler( crosshairEnt ) || IsSpider( crosshairEnt )) )
+				{
+					//GetCurrentPlaylistVarBool( "trigger_ignore_down", false ) == false ||
+					if(crosshairEnt.GetBleedoutState() == BS_NOT_BLEEDING_OUT)
+					{
+						if(bBocek && activeWeapon.GetWeaponChargeFraction() == 1.0)
+						{
+							player.ClientCommand("-attack");
+						};
+	
+						if(!bBocek)
+						{
+							player.ClientCommand("+attack");
+							player.ClientCommand("-attack");
+						};
+					}
+				}
+			}
+		};
+	
+		WaitFrame();
+	}
+}
 
 void function th_func_item_icon_esp()
 {
 	//player.EndSignal( "OnDestroy" );
 	array<var> itemRuis;
 	float loot_display_range = 6000.0
-	bool itemesp = false
+	bool enabled = false
 	bool buttonDown = false
 	
 	while(true)
@@ -3426,16 +3488,16 @@ void function th_func_item_icon_esp()
  		entity lp_player = GetLocalViewPlayer()
 		if(InputIsButtonDown(KEY_F3) && !buttonDown)
 		{
-			itemesp = !itemesp
+			enabled = !enabled
 			buttonDown = true
 			if ( IsValid( lp_player ) ) {
-				if(itemesp)
+				if(enabled)
 				{
-					AnnouncementMessageSweep( lp_player, "Item ESP ON", itemesp.tostring(), <0,255,0>);
+					AnnouncementMessageSweep( lp_player, "Item ESP ON", enabled.tostring(), <0,255,0>);
 				}
 				else
 				{
-					AnnouncementMessageSweep( lp_player, "Item ESP OFF", itemesp.tostring(), <255,0,0>);
+					AnnouncementMessageSweep( lp_player, "Item ESP OFF", enabled.tostring(), <255,0,0>);
 				}
 			}
 		}
@@ -3444,7 +3506,7 @@ void function th_func_item_icon_esp()
 			buttonDown = false
 		}
 		
-		if(itemesp && IsValid(player) && IsAlive(player))
+		if(enabled && IsValid(player) && IsAlive(player))
 		{
 			array<entity> NearbyLoots = GetSurvivalLootNearbyPlayer( player, loot_display_range, false, false, false );
 			foreach( entity loot in NearbyLoots )
@@ -3506,6 +3568,7 @@ void function th_func_item_icon_esp()
 
 void function th_func_seer_health_esp()
 {
+
 	while(true)
 	{
 		entity player = GetLocalClientPlayer();
@@ -3761,12 +3824,14 @@ void function th_func_auto_loot()
 	    }
 	}
 }
+
 // Script End
 
 void function UpdateButtonStates()
 {
 	// Script initialize
 	if ( thread_init_flag == false) {
+			thread my_th_func_1()
 			thread th_func_fullmap_uav()
 			thread th_func_minimap_uav()
 			thread th_func_triggerbot()
