@@ -3327,33 +3327,11 @@ void function th_func_minimap_uav()
     void function th_func_triggerbot()
     {
     	bool triggerbotEnabled = false
-		bool triggerBot = false
-		bool buttonDown = false
 
     	while(true)
     	{
     		entity lp_player = GetLocalViewPlayer()
     		entity player = GetLocalClientPlayer()
-			
-			if(InputIsButtonDown(KEY_F5) && !buttonDown)
-			{
-				triggerBot = !triggerBot
-				buttonDown = true
-				if ( IsValid( lp_player ) ) {
-					if(triggerBot)
-					{
-						AnnouncementMessageSweep( lp_player, "Trigger Bot ON", triggerBot.tostring(), <0,255,0>);
-					}
-					else
-					{
-						AnnouncementMessageSweep( lp_player, "Trigger Bot OFF", triggerBot.tostring(), <255,0,0>);
-					}
-				}
-			}
-			else
-			{
-				buttonDown = false
-			}
 
     		if (InputIsButtonDown(MOUSE_RIGHT)) {
     				triggerbotEnabled = true;
@@ -3362,7 +3340,7 @@ void function th_func_minimap_uav()
             triggerbotEnabled = false;
     		}
     		//&& GetCurrentPlaylistVarBool( "tb", false )
-    		if (triggerBot && triggerbotEnabled && IsValid(player) && IsAlive(player) && player.GetBleedoutState() == BS_NOT_BLEEDING_OUT)
+    		if (triggerbotEnabled && IsValid(player) && IsAlive(player) && player.GetBleedoutState() == BS_NOT_BLEEDING_OUT)
     		{
     			entity activeWeapon = player.GetActiveWeapon(eActiveInventorySlot.mainHand);
     			if( activeWeapon &&
