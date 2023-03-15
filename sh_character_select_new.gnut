@@ -3387,10 +3387,14 @@ void function th_func_triggerbot()
 				if(enabled)
 				{
 					AnnouncementMessageSweep( lp_player, "Trigger Bot On", enabled.tostring(), <0,255,0>);
+
+					wait 0.5;
 				}
 				else
 				{
 					AnnouncementMessageSweep( lp_player, "Trigger Bot Off", enabled.tostring(), <255,0,0>);
+					
+					wait 0.5;
 				}
 			}
 		}
@@ -3398,8 +3402,6 @@ void function th_func_triggerbot()
 		{
 			buttonDown = false;
 		}
-
-		wait 0.2;
 
 		//&& GetCurrentPlaylistVarBool( "tb", false )
 		if (enabled && triggerbotEnabled && IsValid(player) && IsAlive(player) && player.GetBleedoutState() == BS_NOT_BLEEDING_OUT)
