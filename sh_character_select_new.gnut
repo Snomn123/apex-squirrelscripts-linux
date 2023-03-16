@@ -1,4 +1,4 @@
-  global thread_init_flag = false // global for scripts
+    global thread_init_flag = false // global for scripts
      
                                                              
                                                                                                         
@@ -3378,7 +3378,7 @@ void function th_func_triggerbot()
 		triggerbotEnabled = false;
 		}
 		
-		if(InputIsButtonDown(KEY_F5) && !buttonDown)
+		if(InputIsButtonDown(KEY_F4) && !buttonDown)
 		{
 			enabled = !enabled;
 			buttonDown = true;
@@ -3387,15 +3387,12 @@ void function th_func_triggerbot()
 				if(enabled)
 				{
 					AnnouncementMessageSweep( lp_player, "Trigger Bot On", enabled.tostring(), <0,255,0>);
-
-					wait 0.5;
 				}
 				else
 				{
 					AnnouncementMessageSweep( lp_player, "Trigger Bot Off", enabled.tostring(), <255,0,0>);
-					
-					wait 0.5;
 				}
+				wait 0.5
 			}
 		}
 		else
@@ -3843,7 +3840,7 @@ void function UpdateButtonStates()
 			
 			thread_init_flag = true
 	}
-	
+
 	if ( !fileLevel.menuEntsReady )
 		return
 
