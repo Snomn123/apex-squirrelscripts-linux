@@ -3415,6 +3415,10 @@ void function th_func_triggerbot()
 					WaitFrame();
 					continue;
 				};
+
+				bool sniperSentinel = activeWeapon.GetWeaponClassName() == "mp_weapon_sentinel";
+
+				bool sniperLongbow = activeWeapon.GetWeaponClassName() == "mp_weapon_dmr";
 	
 				vector crosshairStart = player.EyePosition();
 				vector crosshairEnd = crosshairStart + player.GetViewForward() * 250000;
@@ -3451,20 +3455,30 @@ void function th_func_triggerbot()
 				(GameRules_GetGameMode() != GAMEMODE_CONTROL && crosshairEnt.GetTeam() != player.GetTeam()))) &&
 				(crosshairEnt.IsPlayer() || IsTrainingDummie(crosshairEnt) || IsProwler( crosshairEnt ) || IsSpider( crosshairEnt )) )
 				{
-					//GetCurrentPlaylistVarBool( "trigger_ignore_down", false ) == false ||
-					if(crosshairEnt.GetBleedoutState() == BS_NOT_BLEEDING_OUT)
+					if(bBocek && activeWeapon.GetWeaponChargeFraction() == 1.0)
 					{
-						if(bBocek && activeWeapon.GetWeaponChargeFraction() == 1.0)
-						{
-							player.ClientCommand("-attack");
-						};
-	
-						if(!bBocek)
-						{
-							player.ClientCommand("+attack");
-							player.ClientCommand("-attack");
-						};
-					}
+						player.ClientCommand("-attack");
+					};
+
+					if(sniperSentinel)
+					{
+						wait(0.2)
+						player.ClientCommand("+attack");
+						player.ClientCommand("-attack");
+					};
+
+					if(sniperLongbow)
+					{
+						wait(0.2)
+						player.ClientCommand("+attack");
+						player.ClientCommand("-attack");
+					};
+
+					if(!bBocek && !sniperSentinel && !sniperLongbow)
+					{
+						player.ClientCommand("+attack");
+						player.ClientCommand("-attack");
+					};
 				}
 			}
 		};
